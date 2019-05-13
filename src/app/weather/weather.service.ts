@@ -33,8 +33,9 @@ export class WeatherService {
   }
 
   getCurrentWeather(city: string, country: string): Observable<ICurrentWeather> {
+    var unit: string;
     return this.httpClient.get<ICurrentWeatherData>(
-      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${environment.appId}`
+      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&appid=${environment.appId}`
     ).pipe(
       map(data => this.transformToICurrentWeather(data))
     );
@@ -45,14 +46,10 @@ export class WeatherService {
     return {
       city: data.name,
       country: data.sys.country,
-      date: new Date(data.dt * 1000) ,
+      date: new Date(data.dt * 1000),
       image: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
-      temperature: this.convertKelvinToFahrenheit(data.main.temp),
+      temperature: data.main.temp,
       description: data.weather[0].description
     };
-  }
-
-  private convertKelvinToFahrenheit(kelvin: number): number {
-    return kelvin * 9 / 5 - 459.67;
   }
 }

@@ -1,13 +1,15 @@
-<div>
-  <div>
-    <span>{{current.city}}, {{current.country}}</span>
-    <span>{{current.date | date: 'fullDate'}}</span>
+<div  *ngIf="current">
+  <div fxLayout="row" >
+    <div fxFlex="60%" class="mat-title no-margin">{{current.city}}, {{current.country}}</div>
+    <div fxFlex class="mat-subheading-2 no-margin right">{{current.date | date: 'EEEE MMM d'}}</div>
   </div>
-  <div>
-    <img [src]="current.image">
-    <span>{{current.temperature | number:"1.0-0"}} </span>
+  <div fxLayout="row" >
+    <div fxFlex="66%">
+      <img style="zoom: 175%" fxFlexAlign="center" [src]="current.image">
+    </div>
+    <div class=" mat-display-1 no-margin" fxFlexAlign="center" >{{current.temperature | number:"1.0-0"}} C&deg;</div>
   </div>
-  <div>
+  <div fxLayoutAlign="center" class="mat-caption">
     {{current.description}}
   </div>
 </div>
